@@ -14,11 +14,31 @@ export class GoogleController {
         @Req() request,
         @Res({ passthrough: true }) response: Response,
     ) {
-        console.log(request.query);
-        console.log(request.query.timeMin, request.query.timeMax);
+        // console.log(request.query);
+        // console.log(request.query.timeMin, request.query.timeMax);
         const calendars: any = await this.googleService.getCalendars(request.cookies['MYzKBlSitQ'], request.query.timeMin, request.query.timeMax);
-        console.log(calendars.data.items);
+        // // console.log(calendars.data.items);
         response.send({ calendarsData: calendars.data });
+    }
+
+    @Get('lists')
+    async getTaskLists(
+        @Req() request,
+        @Res({ passthrough: true }) response: Response,
+    ) {
+        const lists: any = await this.googleService.getTaskLists(request.cookies['MYzKBlSitQ']);
+        // console.log('lists', lists);
+        response.send({ listsData: lists.data });
+    }
+
+    @Get('tasks')
+    async getTasks(
+        @Req() request,
+        @Res({ passthrough: true }) response: Response,
+    ) {
+        const tasks: any = await this.googleService.getTasks(request.cookies['MYzKBlSitQ'], request.query.listName);
+        console.log('tasks', tasks);
+        response.send({ tasksData: tasks.data });
     }
 
     @Get()
