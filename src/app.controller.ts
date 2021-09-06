@@ -8,6 +8,6 @@ export class AppController {
   @Get('')
   async healthCheck(
   ) {
-    console.log('health');
+    // console.log('health');
   }
 }
